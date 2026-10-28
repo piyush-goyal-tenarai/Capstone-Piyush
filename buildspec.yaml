@@ -6,6 +6,9 @@ env:
     ENV_NAME: "capstone-project-env"
     S3_BUCKET: "piyush-capstone-s3"
     AWS_REGION: "eu-north-1"
+    # Explicitly set Go cache directories to avoid the $HOME missing error
+    GOCACHE: "/tmp/.gocache"
+    GOMODCACHE: "/tmp/.gomodcache"
 
 phases:
   install:
