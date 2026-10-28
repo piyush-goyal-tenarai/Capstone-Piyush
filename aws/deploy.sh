@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+REGION="eu-north-1"
+echo "=== AWS Deployment ==="
+echo "1. Build Docker image"
+echo "   docker build -t order-management ."
+echo ""
+echo "2. Push to ECR"
+echo "   aws ecr create-repository --repository-name order-management --region $REGION"
+echo "   aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin <ACCOUNT>.dkr.ecr.$REGION.amazonaws.com"
+echo "   docker tag order-management:latest <ACCOUNT>.dkr.ecr.$REGION.amazonaws.com/order-management:latest"
+echo "   docker push <ACCOUNT>.dkr.ecr.$REGION.amazonaws.com/order-management:latest"
+echo ""
+echo "3. Create RDS"
+echo "   aws rds create-db-instance --db-instance-identifier capstone-db --db-instance-class db.t3.micro --engine postgres --master-username postgres --master-user-password <PASS> --db-name orderdb --allocated-storage 20 --region $REGION"
+echo ""
+echo "4. Store secret"
+echo '   aws secretsmanager create-secret --name capstone/db --secret-string "{\"DB_HOST\":\"<RDS_ENDPOINT>\",\"DB_USER\":\"postgres\",\"DB_PASSWORD\":\"<PASS>\",\"DB_NAME\":\"orderdb\"}" --region '$REGION
+echo ""
+echo "5. Deploy on EC2/ECS with ALB"
+echo "   Configure security groups, IAM role, target group, and listener."

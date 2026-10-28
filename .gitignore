@@ -1,0 +1,39 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+order-management
+
+# Go
+/vendor/
+
+# Environment
+.env
+*.pem
+*.key
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Terraform
+.terraform/
+*.tfstate*
+
+# Test output
+coverage.out
+coverage.html
+
+# Internal documentation
+flow.md
+run.md
+decisions.md
