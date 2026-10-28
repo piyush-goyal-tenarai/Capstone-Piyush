@@ -37,18 +37,9 @@ phases:
       - echo "Uploading build artifact to Amazon S3..."
       - aws s3 cp ${ARTIFACT_NAME} s3://${S3_BUCKET}/${ARTIFACT_NAME} --region ${AWS_REGION}
       - echo "Creating Elastic Beanstalk application version..."
-      - >
-        aws elasticbeanstalk create-application-version
-        --application-name "${APP_NAME}"
-        --version-label "${BUILD_ID}"
-        --source-bundle S3Bucket="${S3_BUCKET}",S3Key="${ARTIFACT_NAME}"
-        --region ${AWS_REGION}
+      - aws elasticbeanstalk create-application-version --application-name "${APP_NAME}" --version-label "${BUILD_ID}" --source-bundle S3Bucket="${S3_BUCKET}",S3Key="${ARTIFACT_NAME}" --region ${AWS_REGION}
       - echo "Updating Elastic Beanstalk environment..."
-      - >
-        aws elasticbeanstalk update-environment
-        --environment-name "${ENV_NAME}"
-        --version-label "${BUILD_ID}"
-        --region ${AWS_REGION}
+      - aws elasticbeanstalk update-environment --environment-name "${ENV_NAME}" --version-label "${BUILD_ID}" --region ${AWS_REGION}
       - echo "Build and deployment triggered successfully."
 
 artifacts:
